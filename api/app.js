@@ -10,8 +10,9 @@ app.use(
     onProxyRes: function (proxyRes, req, res) {
       proxyRes.headers["Access-Control-Allow-Origin"] = "*";
     },
-    pathRewrite: {
-      "/api": "/*", // 将请求路径中的 '/api' 替换为/*
+    pathRewrite: (path, req) => {
+      // 将请求路径中的 '/api' 替换为/*
+      return path.replace("/api", "/*");
     },
     onProxyReq: function (proxyReq, req, res) {
       // 删除 X-Forwarded-For 和 X-Real-IP 头信息 保证不会返回原始客户端的IP
