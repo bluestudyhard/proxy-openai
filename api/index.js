@@ -3,7 +3,7 @@ const { createProxyMiddleware } = require("http-proxy-middleware");
 const app = express();
 
 app.use(
-  "/*",
+  "/",
   createProxyMiddleware({
     target: "https://api.openai.com/", // 无法代理以/api开头的请求
     changeOrigin: true,
@@ -12,7 +12,7 @@ app.use(
     },
     pathRewrite: (path, req) => {
       // 将请求路径中的 '/api' 替换为/*
-      return path.replace("/api", "/*");
+      
     },
     onProxyReq: function (proxyReq, req, res) {
       // 删除 X-Forwarded-For 和 X-Real-IP 头信息 保证不会返回原始客户端的IP
